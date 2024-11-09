@@ -1,0 +1,107 @@
+# IDE settings
+*.iml
+*.ipr
+*.iws
+.idea/
+.out/
+.target/
+
+# Build output directories
+target/
+build/
+out/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nblib/
+nbactions.xml
+nb-configuration.xml
+
+# IntelliJ IDEA
+*.idea
+*.iml
+*.ipr
+*.iws
+.out
+.target
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.swn
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JAR/WAR files
+*.jar
+*.war
+
+# Database files
+*.db
+*.sqlite
+
+# Configuration files with sensitive information
+application.properties
+application.yml
+application-dev.properties
+application-prod.properties
+application-test.properties
+
+# Docker
+.dockerenv
+.dockerignore
+
+# Other
+*.class
+*.keystore
+*.jks
+*.p12
+*.pem
+*.crt
+*.key
+*.csr
+*.pfx
+*.der
+*.pem
+*.pk8
+*.p7b
+*.p7c
+*.p12
+*.p7r
+*.cer
+*.jceks
+*.p12
+*.p7b
+*.p7c
+*.p12
+*.p7r
+*.cer
+*.jceks
+
+# Spring Boot DevTools
+.spring-boot-devtools
