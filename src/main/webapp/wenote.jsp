@@ -36,7 +36,7 @@
 <hr class="layui-bg-cyan" style="height: 10px;">
 </body>
 <script>
-    layui.use(['layer'], function () {
+    layui.use(['util', 'layer'], function () {
         var layer = layui.layer;
         var flashMsgs = [];
         <c:forEach items="${sessionScope.flashMsgs}" var="msg">
@@ -47,6 +47,32 @@
             // 移除 session 中的提示信息
             <c:remove var="flashMsgs" scope="session"/>
         }
+        var util = layui.util;
+        util.fixbar({
+            bar1: '赏',
+            bar2: '赞',
+            click: function (type) {
+                if (type === 'bar1') {
+                    layer.open({
+                        type: 1,
+                        title: '赏',
+                        offset: ['120px', 'font-size:18px'],
+                        content: '<img src="${pageContext.request.contextPath}/ShowUserPhotoServlet?fileName=z.jpg" width="300px" />'
+                    })
+                }
+                if (type === 'bar2') {
+                    layer.open({
+                        type: 1,
+                        offset: '120px',
+                        title: ['赞', 'font-size:18px'],
+                        content: '<img src="${pageContext.request.contextPath}/ShowUserPhotoServlet?fileName=s.jpg" width="300px" />'
+                    })
+                }
+                if (type === 'top') {
+                    layer.msg("扶摇直上九万里!");
+                }
+            }
+        })
     });
 </script>
 </html>

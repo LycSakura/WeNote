@@ -307,4 +307,101 @@ public class NoteDao {
         }
         return noteListByKeyword;
     }
+
+    /**
+     * @param oldCategoryName 旧分类名
+     * @param categoryName    新分类名
+     * @description: 更新笔记分类名
+     */
+    public void updateCategoryName(String oldCategoryName, String categoryName) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "update note set categoryName=? where categoryName=?";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, categoryName);
+            preparedStatement.setString(2, oldCategoryName);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, null);
+        }
+    }
+
+    /**
+     * @param categoryName 分类名
+     * @return List<Note>
+     * @description: 根据分类名查询笔记
+     */
+    public List<Note> selectAllNoteByCategoryName(String categoryName) {
+        List<Note> noteListByCategoryName = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select * from note where categoryName=? order by createTime desc";
+        Note note = null;
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, categoryName);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                note = new Note();
+                note.setNoteID(resultSet.getInt("noteID"));
+                note.setAuthor(resultSet.getString("author"));
+                note.setNoteTitle(resultSet.getString("noteTitle"));
+                note.setNoteContent(resultSet.getString("noteContent"));
+                note.setVisit(resultSet.getInt("visit"));
+                note.setCategoryName(resultSet.getString("categoryName"));
+                note.setCreateTime(resultSet.getString("createTime"));
+                note.setUpdateTime(resultSet.getString("updateTime"));
+                noteListByCategoryName.add(note);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, resultSet);
+        }
+        return noteListByCategoryName;
+    }
+
+    /**
+     * @param tagName 标签名
+     * @return List<Note>
+     * @description: 根据标签名查询笔记
+     */
+    public List<Note> selectAllNoteByTagName(String tagName) {
+        List<Note> noteListByTagName = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select note.noteID,author,noteTitle,noteContent,visit,categoryName,createTime,updateTime from note join tag on tag.noteID=note.noteID " +
+                "where tagName = ? order by createTime desc";
+        Note note = null;
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, tagName);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                note = new Note();
+                note.setNoteID(resultSet.getInt("noteID"));
+                note.setAuthor(resultSet.getString("author"));
+                note.setNoteTitle(resultSet.getString("noteTitle"));
+                note.setNoteContent(resultSet.getString("noteContent"));
+                note.setVisit(resultSet.getInt("visit"));
+                note.setCategoryName(resultSet.getString("categoryName"));
+                note.setCreateTime(resultSet.getString("createTime"));
+                note.setUpdateTime(resultSet.getString("updateTime"));
+                noteListByTagName.add(note);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, resultSet);
+        }
+        return noteListByTagName;
+    }
 }

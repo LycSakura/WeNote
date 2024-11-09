@@ -34,7 +34,7 @@ public class TagDao {
         } finally {
             DBUtils.close(connection, preparedStatement, resultSet);
         }
-        return null;
+        return tagNameMap;
     }
 
     /**
@@ -123,6 +123,27 @@ public class TagDao {
             connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, noteID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, null);
+        }
+    }
+    /**
+     * @param oldTagName 旧标签名称
+     * @param tagName 新标签名称
+     * @description: 更新笔记标签名称
+     */
+    public void updateTagName(String oldTagName, String tagName) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "update tag set tagName=? where tagName=?";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, tagName);
+            preparedStatement.setString(2, oldTagName);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -78,4 +78,25 @@ public class NoteService {
     public List<Note> fetchAllNoteByKeyword(String keyword) {
         return new NoteDao().selectAllNoteByKeyword(keyword);
     }
+    /**
+     * @Param oldCategoryName, categoryName
+     * @description: 更改笔记类别名
+     */
+    public void changeCategoryName(String oldCategoryName, String categoryName) {
+        new NoteDao().updateCategoryName(oldCategoryName, categoryName);
+    }
+    /**
+     * @return List<Note>
+     * @description: 根据笔记类别名查询笔记
+     */
+    public List<Note> fetchAllNoteByCategoryName(String categoryName) {
+        return new NoteDao().selectAllNoteByCategoryName(categoryName);
+    }
+    /**
+     * @return List<Note>
+     * @description: 根据标签名查询笔记
+     */
+    public List<Note> fetchAllNoteByTagName(String tagName) {
+        return new NoteDao().selectAllNoteByTagName(tagName);
+    }
 }

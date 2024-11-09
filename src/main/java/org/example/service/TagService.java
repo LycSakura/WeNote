@@ -53,4 +53,12 @@ public class TagService {
     public void deleteTagByNoteID(Integer noteID) {
         new TagDao().deleteTagByNoteID(noteID);
     }
+    /**
+     * @param oldTagName
+     * @param tagName
+     * @description: 修改笔记标签名
+     */
+    public void changeTagName(String oldTagName, String tagName) {
+        new TagDao().updateTagName(oldTagName, tagName);
+    }
 }

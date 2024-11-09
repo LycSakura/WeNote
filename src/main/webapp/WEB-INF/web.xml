@@ -25,4 +25,9 @@
         <url-pattern>/author/ChangeNoteServlet</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>CommentFormValidatorFilter</filter-name>
+        <url-pattern>/user/SaveCommentServlet</url-pattern>
+    </filter-mapping>
+
 </web-app>

@@ -54,7 +54,7 @@
                     ${tag.key}
                 <span class="layui-badge">${tag.value}</span>
             </a>
-        </c:forEach>>
+        </c:forEach>
     </div>
 </div>
 <%--其它功能面板--%>

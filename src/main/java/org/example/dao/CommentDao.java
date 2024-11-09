@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.example.entity.Comment;
 import org.example.entity.User;
+import org.example.entity.dto.CommentForm;
 import org.example.utils.DBUtils;
 
 import java.sql.Connection;
@@ -54,6 +55,7 @@ public class CommentDao {
         }
         return commentList;
     }
+
     /**
      * @param noteID
      * @return void
@@ -73,5 +75,67 @@ public class CommentDao {
         } finally {
             DBUtils.close(connection, preparedStatement, null);
         }
+    }
+
+    /**
+     * @param commentForm
+     * @return void
+     * @description: 保存评论
+     */
+    public void insert(CommentForm commentForm) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "insert into comment values(null,?,?,?,?,?,default)";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, commentForm.getNoteID());
+            preparedStatement.setString(2, commentForm.getUserName());
+            preparedStatement.setString(3, commentForm.getCommentTitle());
+            preparedStatement.setString(4, commentForm.getCommentContent());
+            preparedStatement.setString(5, commentForm.getRemoteIP());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, null);
+
+        }
+    }
+
+    /**
+     * @param userName
+     * @return List<Comment>
+     * @description: 查询某个用户发表的评论
+     */
+    public List<Comment> selectCommentListByUserName(String userName) {
+        List<Comment> commentList = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select * from comment where userName=? order by createTime desc ";
+        Comment comment = null;
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, userName);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                comment = new Comment();
+                comment.setCommentContent(resultSet.getString("commentContent"));
+                comment.setCommentID(resultSet.getInt("commentID"));
+                comment.setCommentTitle(resultSet.getString("commentTitle"));
+                comment.setCreateTime(resultSet.getString("createTime"));
+                comment.setNoteID(resultSet.getInt("noteID"));
+                comment.setRemoteIP(resultSet.getString("remoteIP"));
+                comment.setUserName(resultSet.getString("userName"));
+                commentList.add(comment);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtils.close(connection, preparedStatement, resultSet);
+        }
+        return commentList;
     }
 }
