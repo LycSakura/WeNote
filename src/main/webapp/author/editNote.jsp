@@ -68,7 +68,6 @@
         </form>
     </div>
 </fieldset>
-<%--<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>--%>
 <script src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/resources/ckeditor/zh-cn.js"></script>
 <script>
